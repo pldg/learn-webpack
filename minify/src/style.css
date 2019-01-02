@@ -1,0 +1,5 @@
+body {
+  background-color: lightblue;
+}
+
+/* this comment should be elminitated by cssnano / OptimizeCSSAssetsPlugin */

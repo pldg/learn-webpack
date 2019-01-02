@@ -1,0 +1,1 @@
+module.exports = 'This is a dependency of large-shared-component.js';

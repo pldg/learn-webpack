@@ -1,0 +1,17 @@
+{
+  "name": "env-argv-parameters",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode=development --devtool=false --env.target=dev",
+    "prod": "webpack --mode=production --env.target=prod",
+    "devServer": "webpack-dev-server --mode=development --env.target=devServer"
+  },
+  "homepage": "https://github.com/pldg/learn-webpack",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.6"
+  }
+}

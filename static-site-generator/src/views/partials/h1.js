@@ -1,0 +1,1 @@
+module.exports = (text) => `<h1>${text}</h1>`;

@@ -1,0 +1,18 @@
+@import './partials/var.scss';
+@import './partials/mixin.scss';
+@import './partials/image-nebula.scss';
+
+body {
+  background-color: var(--bg-color);
+}
+
+.flex-container {
+  display: flex; /* autoprefixer add prefix for flexbox */
+}
+
+.flex-container > div {
+  width: 100px;
+  height: 100px;
+  background-color: brown;
+  border: 1px solid black;
+}

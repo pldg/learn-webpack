@@ -1,0 +1,10 @@
+:root {
+  --bgc: brown;
+  --color: white;
+}
+body {
+  background-color: var(--bgc);
+  color: var(--color);
+}
+
+/*# sourceMappingURL=main.9b72.css.map*/

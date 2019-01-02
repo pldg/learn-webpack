@@ -1,0 +1,21 @@
+@import './css-variables/var.css';
+
+:root {
+  --text-color: lightgrey;
+}
+
+body {
+  background-color: var(--bg-color);
+}
+
+.flex-container {
+  display: flex;
+  color: var(--text-color);
+}
+
+.flex-container > div {
+  width: 100px;
+  height: 100px;
+  background-color: brown;
+  border: 1px solid black;
+}

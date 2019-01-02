@@ -1,0 +1,1 @@
+export default 'Hello from module1.js';

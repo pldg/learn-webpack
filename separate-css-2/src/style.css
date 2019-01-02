@@ -1,0 +1,8 @@
+@import './var.css';
+
+body {
+  background-color: var(--bg-color);
+  background-image: url('./nebula.jpg');
+  background-size: 200px;
+  background-repeat: no-repeat;
+}

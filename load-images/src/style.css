@@ -1,0 +1,22 @@
+@import './var.css';
+
+body {
+  background-color: var(--bg-color);
+}
+
+img {
+  max-width: var(--image-width);
+}
+
+.image-nebula {
+  height: 20vh;
+  max-width: var(--image-width);
+  background-image: url('./nebula.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.svg-image {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

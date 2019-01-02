@@ -1,0 +1,34 @@
+# Learn Webpack
+
+- [mode](mode) Explain Webpack 4 new `mode` option
+- [env-argv-parameters](env-argv-parameters) Export configuration as function and access `env` and `argv` parameters which can be used to create different configurations based on environment
+- [tree-shaking](tree-shaking) Prevent code duplication, remove unused code
+- [babel](babel) Transform ES2015 with Babel
+- [babel-polyfill](babel-polyfill) Apply polyfills with Babel
+- [html-template](html-template) Create a custom `HtmlWebpackPlugin` template
+- [load-css](load-css) Use `css-loader` and `style-loader` to parse css files and place them into html page
+- [load-images](load-images) Use `file-loader` and `url-loader` to import images and `raw-loader` to import svg
+- [caching](caching) Add hash to filenames for browser caching
+- [separate-runtime](separate-runtime) Extract webpack runtime in a separate file
+- [source-maps-inline](source-maps-inline) Inline css and js source maps
+- [source-maps-external](source-maps-external) Extract css and js source maps files in a separate file
+- [separate-css-1](separate-css-1) Extract css into a separate file using `MiniCssExtractPlugin`
+- [separate-css-2](separate-css-2) Use of MiniCssExtractPlugin `options.publicPath` to correctly resolve url paths in css
+- [load-sass](load-sass) Use `sass-loader` to parse scss files
+- [postcss](postcss) How to use `postcss-loader`
+- [sass-postcss](sass-postcss) Use `sass-loader` and `postcss-loader` together
+- [remove-unused-css](remove-unused-css) Remove unused css with `PurifyCSSPlugin`
+- [minify](minify) Minify css, javascript, html
+- [chunks-types](chunks-types) Describe what a chunk is and the different types of chunks
+- [dynamic-import](dynamic-import) Code splitting, use `import()` to load chunks on demand
+- [lazy-load-image](lazy-load-image) Dynamic import an image with `import()`
+- [require-context](require-context) Require all files in a directory or matching a pattern
+- [lazy-load-multiple-images](lazy-load-multiple-images) Use `require.context` and `import()` to automatically lazy-load multiple images
+- [publicpath](publicpath) What is `output.publicPath` and how to use it
+- [bundle-splitting-1](bundle-splitting-1) The basic of bundle splitting with `SplitChunksPlugin` default options
+- [bundle-splitting-2](bundle-splitting-2) Another bundle splitting example
+- [bundle-splitting-3](bundle-splitting-3) `splitChunks.chunks: 'all'`
+- [bundle-splitting-4](bundle-splitting-4) extract css with splitChunksPlugin
+- [bundle-splitting-5](bundle-splitting-5) `cacheGroups` configuration
+- [composing-configs](composing-configs) Create different configurations, separate production and development targets, merge configurations
+- [static-site-generator](static-site-generator) A basic static site generator with router capabilities using only `HtmlWebpackPlugin`

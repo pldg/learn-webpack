@@ -1,0 +1,6 @@
+@import './var.css';
+
+body {
+  background-color: var(--bgc);
+  color: var(--color);
+}

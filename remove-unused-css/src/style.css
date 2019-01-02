@@ -1,0 +1,21 @@
+@import './var.css';
+
+body {
+  background-color: var(--bg-color);
+}
+
+.text-color {
+  color: var(--text-color);
+}
+
+.unused-class {
+  display: none;
+}
+
+.do_not_remove-this-class {
+  color: yellow;
+}
+
+.textUnderline {
+  text-decoration: underline;
+}

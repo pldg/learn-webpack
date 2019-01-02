@@ -1,0 +1,17 @@
+{
+  "name": "tree-shaking",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode=development --devtool=false",
+    "prod": "webpack --mode=production",
+    "devServer": "webpack-dev-server --mode=development"
+  },
+  "homepage": "https://github.com/pldg/learn-webpack",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  }
+}

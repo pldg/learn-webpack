@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>lazy-load-multiple-images</title>
+</head>
+<body>
+  <style>
+    h2 { margin-bottom: 150vh; }
+    img { animation: fade-in 2s; }
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+
+  <h2>Scroll down to show images and look at DevTools network tab.</h2>
+  
+  <div id="images">
+    <h3>Images will be shown here.</h3>
+  </div>
+<script type="text/javascript" src="main.js"></script></body>
+</html>

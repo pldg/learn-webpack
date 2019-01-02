@@ -1,0 +1,1 @@
+module.exports = 'This is a shared-component dependency!';

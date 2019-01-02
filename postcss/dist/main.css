@@ -1,0 +1,20 @@
+body {
+  background-color: lightblue;
+}
+
+.flex-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  color: lightgrey;
+}
+
+.flex-container > div {
+  width: 100px;
+  height: 100px;
+  background-color: brown;
+  border: 1px solid black;
+}
+
+/*# sourceMappingURL=main.css.map*/

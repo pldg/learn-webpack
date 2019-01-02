@@ -1,0 +1,27 @@
+{
+  "name": "babel-polyfill",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode=development --devtool=false",
+    "prod": "webpack --mode=production",
+    "devServer": "webpack-dev-server --mode=development"
+  },
+  "homepage": "https://github.com/pldg/learn-webpack",
+  "license": "MIT",
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-loader": "^8.0.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0"
+  }
+}

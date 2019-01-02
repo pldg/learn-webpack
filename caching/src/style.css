@@ -1,0 +1,8 @@
+body {
+  background-color: lightblue;
+}
+
+img {
+  display: block;
+  max-width: 20vw;
+}
