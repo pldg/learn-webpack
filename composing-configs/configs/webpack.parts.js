@@ -1,138 +1,160 @@
-/* =====
-set mode
-======== */
+const path = require('path');
 
-exports.mode = type => ({ mode: type });
+/**
+ * Set entry points
+ * @param {Object} entry
+ */
+exports.entry = (entry) => ({
+  entry
+});
 
-/* ========
-set devtool
-=========== */
+/**
+ * Set output directory
+ * @param {Object} output
+ */
+exports.output = (output) => ({
+  output
+});
 
-exports.devtool = type => ({ devtool: type });
+/**
+ * Set webpack mode
+ * @param {String} mode
+ */
+exports.mode = (mode) => ({
+  mode
+});
 
-/* ==========
-set devServer
-============= */
+/**
+ * Set sourcemaps
+ * @param {String} devtool
+ */
+exports.devtool = (devtool) => ({
+  devtool
+});
 
-exports.devServer = ({
-  hot = false,
-  compress = true,
-  port = 8080
-} = {}) => {
+/**
+ * Set development server
+ * @param {Object} [devServer]
+ */
+exports.devServer = (devServer) => {
   const webpack = require('webpack');
-  const plugins = hot
-    ? [ new webpack.HotModuleReplacementPlugin() ]
-    : [];
+
+  devServer = Object.assign({
+      compress: true,
+      port: 8080,
+
+      // When hot reload is enabled, changes in .html will not trigger reload
+      // Use contentBase to serve and reload static content like .html files
+
+      //hot: true,
+      //contentBase: path.join(process.cwd(), 'src/html/'),
+      //watchContentBase: true
+    },
+    devServer
+  );
+
+  const plugins = devServer.hot ? [new webpack.HotModuleReplacementPlugin()] : [];
 
   return {
-    devServer: { hot, port, compress },
+    devServer,
     plugins
   };
 };
 
-/* ==============
-clean directories
-================= */
-
-exports.clean = (directories, projectRoot) => {
-  const CleanWebpackPlugin = require('clean-webpack-plugin');
+/**
+ * Clean output directory
+ */
+exports.clean = () => {
+  const {
+    CleanWebpackPlugin
+  } = require('clean-webpack-plugin');
 
   return {
     plugins: [
-      new CleanWebpackPlugin(directories, { root: projectRoot })
+      new CleanWebpackPlugin()
     ]
   };
 };
 
-/* ==========
-generate html
-============= */
-
+/**
+ * Generate html file
+ * @param {String} [pageName]
+ * @param {Object} [options]
+ */
 exports.html = ({
-  template = 'node_modules/html-webpack-plugin/default_index.ejs',
-  title = '',
-  path = '',
-  minify = false
-} = {}) => {
+  pageName = '',
+  options
+}) => {
   const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-  if (minify) {
-    minify = {
-      collapseWhitespace: true,
-      removeComments: true
-    };
-  }
+  options = Object.assign({
+      filename: `${pageName && pageName + '/'}index.html`,
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true
+      }
+    },
+    options
+  );
 
   return {
     plugins: [
-      new HtmlWebpackPlugin({
-        template,
-        title,
-        // if path === '' then filename: 'index.html'
-        // otherwise filename: 'page2/index.html'
-        // and so on for every page name
-        filename : `${path && path + '/'}index.html`,
-        minify
-      })
+      new HtmlWebpackPlugin(options)
     ]
   };
 };
 
-/* =======
-inline css
-========== */
-
-exports.inlineCSS = ({
-  sourceMap = true,
-} = {}) => ({
+/**
+ * Inline css
+ * @param {Object} [cssLoaderOptions]
+ */
+exports.inlineCSS = (cssLoaderOptions) => ({
   module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: { sourceMap }
-          }
-        ]
-      }
-    ]
+    rules: [{
+      test: /\.css$/,
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: cssLoaderOptions
+        }
+      ]
+    }]
   }
 });
 
-/* ========
-extract css
-=========== */
-
+/**
+ * Extract css into a separate file
+ * @param {Object} [ctx]
+ * @param {String} [ctx.outputDir]
+ * @param {Object} [ctx.cssLoaderOptions]
+ * @param {Object} [ctx.extractPluginOptions]
+ */
 exports.extractCSS = ({
-  sourceMap = true,
-  extractPluginOptions = {},
-  outputDir = ''
-} = {}) => {
+  outputDir = '',
+  cssLoaderOptions,
+  extractPluginOptions
+}) => {
   const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
   return {
     module: {
-      rules: [
-        {
-          test: /\.css$/,
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: extractPluginOptions
-            },
-            {
-              loader: 'css-loader',
-              options: { sourceMap }
-            }
-          ]
-        }
-      ]
+      rules: [{
+        test: /\.css$/,
+        use: [{
+            loader: MiniCssExtractPlugin.loader,
+            options: extractPluginOptions
+          },
+          {
+            loader: 'css-loader',
+            options: cssLoaderOptions
+          }
+        ]
+      }]
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: `${outputDir}/[name].[contenthash:4].css`
+        filename: `${outputDir}[name].[contenthash:4].css`
       })
     ]
   };

@@ -24,6 +24,7 @@
 - [lazy-load-image](lazy-load-image) Dynamic import an image with `import()`
 - [require-context](require-context) Require all files in a directory or matching a pattern
 - [lazy-load-multiple-images](lazy-load-multiple-images) Use `require.context` and `import()` to automatically lazy-load multiple images
+- [lazy-load-images-folders](lazy-load-images-folders) Dynamically import folders with images depending on the button you click
 - [publicpath](publicpath) What is `output.publicPath` and how to use it
 - [bundle-splitting-1](bundle-splitting-1) The basic of bundle splitting with `SplitChunksPlugin` default options
 - [bundle-splitting-2](bundle-splitting-2) Another bundle splitting example

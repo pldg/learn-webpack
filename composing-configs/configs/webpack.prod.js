@@ -1,19 +1,22 @@
 const merge = require('webpack-merge');
 const parts = require('./webpack.parts');
-const PATHS = require('./paths');
+const {
+  PATHS
+} = require('./const');
 
 const prodConfig = merge([
+  parts.clean(),
+  parts.output({
+    filename: '[name].[chunkhash:4].js'
+  }),
   parts.mode('production'),
-  parts.devtool('source-map'),
-  parts.clean([PATHS.appOutput], PATHS.projectRoot),
   parts.html({
-    title: 'composing-config',
-    template: PATHS.appInput + '/index.html',
-    minify: true
+    options: {
+      template: PATHS.input + '/index.html'
+    }
   }),
   parts.extractCSS({
-    extractPluginOptions: { publicPath: '../' },
-    outputDir: 'css'
+    outputDir: 'css/'
   })
 ]);
 

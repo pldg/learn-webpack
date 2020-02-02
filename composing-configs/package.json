@@ -1,24 +1,20 @@
 {
-  "name": "composing-configs",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "dev": "webpack --env.target=dev",
-    "prod": "webpack --env.target=prod",
-    "devServer": "webpack-dev-server --env.target=devServer"
-  },
   "homepage": "https://github.com/pldg/learn-webpack",
   "license": "MIT",
+  "scripts": {
+    "dev": "webpack --config ./configs/webpack.config.js --env.target=dev",
+    "devserver": "webpack-dev-server --config ./configs/webpack.config.js --env.target=devServer",
+    "prod": "webpack --config ./configs/webpack.config.js --env.target=prod"
+  },
   "devDependencies": {
-    "chalk": "^2.4.1",
-    "clean-webpack-plugin": "^0.1.19",
-    "css-loader": "^1.0.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.0.0",
     "html-webpack-plugin": "^3.2.0",
-    "mini-css-extract-plugin": "^0.4.2",
-    "style-loader": "^0.23.0",
-    "webpack": "^4.17.1",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.11",
-    "webpack-merge": "^4.1.4"
+    "mini-css-extract-plugin": "^0.7.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.1"
   }
 }

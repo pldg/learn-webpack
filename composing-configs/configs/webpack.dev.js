@@ -1,18 +1,24 @@
 const merge = require('webpack-merge');
 const parts = require('./webpack.parts');
-const PATHS = require('./paths');
+const {
+  PATHS
+} = require('./const');
 
 const devConfig = merge([
+  parts.clean(),
   parts.mode('development'),
-  parts.devtool(false),
-  parts.clean([PATHS.appOutput], PATHS.projectRoot),
+  parts.devtool('source-map'),
   parts.html({
-    title: 'composing-config',
-    template: PATHS.appInput + '/index.html'
+    options: {
+      template: PATHS.input + '/index.html',
+      minify: false
+    }
   }),
   parts.extractCSS({
-    extractPluginOptions: { publicPath: '../' },
-    outputDir: 'css'
+    outputDir: 'css/',
+    cssLoaderOptions: {
+      sourceMap: true
+    }
   })
 ]);
 
