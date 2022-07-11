@@ -1,66 +1,58 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
-module.exports = {
-  output: {
-    filename: '[name].[chunkhash:4].js'
-  },
-  devtool: 'source-map',
-  optimization: {
-    minimizer: [
-      new UglifyWebpackPlugin(
-        {
-          // important: to make drop_console option works you must disable sourceMap
-          sourceMap: true,
-          cache: true,
-          parallel: true
-        },
-        {
-          uglifyOptions: {
-            compress: { drop_console: true }
-          }
-        }
-      ),
-      new OptimizeCSSAssetsPlugin({
-        // enable css external source maps output
-        cssProcessorOptions: {
-          map: {
-            inline: false,
-            annotation: true
-          }
-        }
-      })
-    ]
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          { loader: MiniCssExtractPlugin.loader },
-          {
-            loader: 'css-loader',
-            options: { sourceMap: true }
-          }
-        ]
-      }
-    ]
-  },
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:4].css'
-    }),
+module.exports = (env) => {
+  const isProd = env.target === "prod";
+  const isDevServer = env.target === "serve";
+
+  const plugins = [
     new HtmlWebpackPlugin({
-      title: 'minify',
-      template: 'src/index.html',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true
-      }
-    })
-  ]
+      template: "./src/index.html",
+      minify: isProd ? true : false,
+    }),
+  ];
+
+  if (!isDevServer) {
+    plugins.push(new MiniCssExtractPlugin());
+  }
+
+  return {
+    output: {
+      clean: true,
+    },
+    devtool: isDevServer ? "eval" : "source-map",
+    devServer: {
+      hot: true,
+    },
+    mode: isProd ? "production" : "development",
+    optimization: {
+      minimizer: [
+        // Tells webpack@5 to extend defaults minimizer options
+        `...`,
+        new CssMinimizerPlugin(),
+      ],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: isDevServer
+                ? "style-loader"
+                : MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    plugins,
+  };
 };

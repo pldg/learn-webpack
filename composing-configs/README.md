@@ -1,7 +1,7 @@
 # Composing Configurations
 
-Create different configurations, separate production and development targets, merge configurations with [webpack-merge](https://github.com/survivejs/webpack-merge)
+Separate production and development configurations in different files. Merge configurations files with [webpack-merge](https://github.com/survivejs/webpack-merge).
 
 ## Further reading
 
-[Survivejs Webpack Book - Composing Configuration](https://survivejs.com/webpack/developing/composing-configuration/)
+[SurviveJS - Composing Configuration](https://survivejs.com/webpack/developing/composing-configuration/)

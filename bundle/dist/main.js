@@ -1,0 +1,1 @@
+(()=>{var o={42:()=>{console.log("shared-component.js loaded!")}},e={};function s(r){var l=e[r];if(void 0!==l)return l.exports;var d=e[r]={exports:{}};return o[r](d,d.exports,s),d.exports}(()=>{"use strict";s(42),console.log("a.js loaded!"),console.log("b.js loaded!"),console.log("index.js loaded!")})()})();

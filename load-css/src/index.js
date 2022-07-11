@@ -1,6 +1,4 @@
-import './style.css';
-import h1 from './h1';
+// This import statement is parsed by css-loader
+import "./style.css";
 
-console.log('index.js loaded!');
-
-document.body.prepend( h1() );
+console.log("index.js loaded!");

@@ -1,32 +1,61 @@
-# Build a simple static site generator with Webpack
+# Simple static site generator
 
-*Note:* for more in depth explanation read my article [build-a-simple-static-site-generator-with-webpack](https://dev.to/pldg/build-a-simple-static-site-generator-with-webpack-5a29)
+## How to
 
-**readFiles.js** — Read all files in a directory and extract their filepath, name, ext, stat
+Create some javascript files inside *src/pages/*. Each of those files represent an html page, they must export a string of html content:
 
-**webpack.pages.js** — Loop through each page name and load its specific HtmlWebpackPlugin configuration
+```js
+module.exports = = `<h1>Home Page</h1>`;
+```
 
-**webpack.generatePage.js** — Return a new instance of HtmlWebpackPlugin with its specific options
+Those files will be converted by [HtmlWebpackPlugin](https://github.com/jantimon/html-webpack-plugin) in static html files. Create a [custom *template.ejs*](../html-plugin-template/) file for HtmlWebpackPlugin to dynamically load the correct page:
 
-**html-template.ejs** — Dynamically load the correct page
+```html
+<body>
+  <%= require(`./src/pages/${htmlWebpackPlugin.options.pageName}.js`) %>
+</body>
+```
 
-**router.js** — To navigate between pages. You don't have to add *index.html* to your links to navigate between pages. With this method you'll not see *.html* extension at the end of the url
+Create a function to read all page files and return their file names. Loop through each page name and load their specific HtmlWebpackPlugin configuration:
 
-Run `webpack` and see the result. Navigate between pages: `http://www.mywebsite.com/` or `http://www.mywebsite.com/page2` and so on
+```js
+const pages = [];
+
+readFiles("./src/pages", ({ name }) =>
+  pages.push(
+    new HtmlWebpackPlugin({
+      template: "./template.ejs",
+      inject: false,
+      pageName: name,
+      // The page path is required inside template.ejs
+      // HtmlWebpackPlugin will parse it and load the string inside the page
+      filename: name === "home" ? "index.html" : `${name}/index.html`
+    })
+  )
+)
+```
+
+Then add `pages` to the list of webpack plugins in the configuration file.
+
+If you run `npm run dev` the structure in the *dist* folder will looks like this:
+
+```txt
+dist/
+│    index.html
+│
+│--- about/
+│         index.html
+│
+│--- contact/
+          index.html
+```
 
 ## Limitations
 
-You can't view your app via `file:///` protocol because your router links are set as **absolute path**, you must use a local or a remote server
+You can't view your app via `file:///` protocol because your nav links are set as *absolute path*, you must use a local or a remote server.
 
-[HMR](https://webpack.js.org/concepts/hot-module-replacement/) doesn't work. If you add `HotModuleReplacementPlugin` and `devServer.hot: true` views files will not be connected to devServer
+[HMR](https://webpack.js.org/concepts/hot-module-replacement/) doesn't work. If you add `devServer.hot: true` views files will not be connected to devServer.
 
 ## Notes
 
-Require a views file directly inside HtmlWebpackPlugin doesn't connect it do devServer
-
-- All require calls inside *webpack.config.js* file are executed by **node** - page1.js will not be connected to devServer
-- All require calls inside *HtmlWebpackPlugin* templates are executed by **webpack** - page1.js will be connected to devServer correctly
-
-See [this issue](https://github.com/jantimon/html-webpack-plugin/issues/1020#issuecomment-411644399) reference
-
-If you're using VS Code and want a better experience typing html inside template literals, I suggest [template literal editor](https://marketplace.visualstudio.com/items?itemName=plievone.vscode-template-literal-editor) extension
+If you're using VS Code and want a better typing experience for writing html inside template literals, I suggest [template literal editor](https://marketplace.visualstudio.com/items?itemName=plievone.vscode-template-literal-editor) extension.

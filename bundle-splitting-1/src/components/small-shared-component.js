@@ -1,1 +1,0 @@
-module.exports = 'This is a small component';

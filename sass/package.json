@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "dev": "webpack --env target=dev",
+    "prod": "webpack --env target=prod",
+    "serve": "webpack serve --env target=serve"
+  },
+  "homepage": "https://github.com/pldg/learn-webpack",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "sass": "^1.53.0",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
+}

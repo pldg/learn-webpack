@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title><%= htmlWebpackPlugin.options.title %></title>
+  <title>Load Images</title>
 </head>
-<body>
-  <h2>Text from index.html</h2>
 
+<body>
   <img src="<%= require('./alice.jpg') %>">
-  
+
+  <!-- Background url image from style.css -->
   <div class="image-nebula"></div>
 
-  <div class="svg-image">
-    <%= require('./sun.svg') %>
-  </div>
+  <!-- Img src loaded from entry point index.js -->
+  <img class="image-inferno">
+
+  <%= require('./sun.svg') %>
 </body>
+
 </html>

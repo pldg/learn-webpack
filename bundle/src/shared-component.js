@@ -1,0 +1,1 @@
+console.log('shared-component.js loaded!');

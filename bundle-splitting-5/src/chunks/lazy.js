@@ -1,1 +1,0 @@
-module.exports = 'this is a lazy loaded chunk!';

@@ -1,1 +1,0 @@
-{"version":3,"sources":["D:/WebDev/study/learn-webpack/minify/src/style.css"],"names":[],"mappings":"AAAA,KACE,wBAA4B,CAC7B","file":"main.2e54.css","sourcesContent":["body {\r\n  background-color: lightblue;\r\n}\r\n\r\n/* this comment should be elminitated by cssnano / OptimizeCSSAssetsPlugin */"]}

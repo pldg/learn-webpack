@@ -1,7 +1,6 @@
-/* tilde `~` is used by css-loader to import css from node_modules */
-@import '~bootstrap/dist/css/bootstrap.css';
-@import './var.css';
+/* Tilde `~` is used by css-loader to import stylesheet from node_modules */
+@import "~bootstrap/dist/css/bootstrap.min.css";
 
 body {
-  background-color: var(--bg-color);
+  background-color: lightcoral;
 }

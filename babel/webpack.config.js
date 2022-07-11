@@ -1,20 +1,25 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const babel_config = require('./babel.config');
+module.exports = (env) => {
+  const isProd = env.target === "prod";
 
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: babel_config
-        }
-      }
-    ]
-  },
-  plugins: [
-    new CleanWebpackPlugin(['dist'])
-  ]
+  return {
+    output: {
+      clean: true,
+    },
+    mode: isProd ? "production" : "development",
+    devtool: false,
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: [["@babel/preset-env"]],
+            },
+          },
+        },
+      ],
+    },
+  };
 };

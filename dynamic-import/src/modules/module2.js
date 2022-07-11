@@ -1,1 +1,0 @@
-export default 'Hello from module2.js';

@@ -1,49 +1,68 @@
-const path = require('path');
-const glob = require('glob');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const PurifyCSSPlugin = require('purifycss-webpack');
+const path = require("path");
+const glob = require("glob");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PurgecssPlugin = require("purgecss-webpack-plugin");
 
-module.exports = (env) => ({
-  devtool: env.target == 'devServer' ? 'eval' : 'source-map',
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: env.target == 'devServer' ? 'style-loader' : MiniCssExtractPlugin.loader
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          }
-        ]
-      }
-    ]
-  },
-  plugins: [
-    new CleanWebpackPlugin('dist'),
-    new MiniCssExtractPlugin(),
-    // PurifyCSSPlugin must be placed after MiniCssExtractPlugin
-    new PurifyCSSPlugin({
-      // give paths to parse for rules, should be absolute
-      // `**` matches zero or more directories and subdirectories
-      paths: glob.sync(path.join(__dirname, 'src/**/*.+(html|js)'), {
-        // do not match directories name
-        nodir: true
-      }),
-      purifyOptions: {
-        // all class that include "do_not_remove" will not be removed
-        whitelist: ['*do_not_remove*']
-      }
-    }),
+module.exports = (env) => {
+  const isProd = env.target === "prod";
+  const isDevServer = env.target === "serve";
+
+  const plugins = [
     new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      title: 'remove-unused-css'
-    })
-  ]
-});
+      template: "./src/index.html",
+    }),
+    new MiniCssExtractPlugin(),
+  ];
+
+  if (isProd) {
+    plugins.push(
+      // PurgecssPlugin must be placed after MiniCssExtractPlugin
+      new PurgecssPlugin({
+        // Give absolute paths to parse
+        // Matches all files inside src folder and its subdirectories
+        paths: glob.sync(path.join(__dirname, "src/**/*"), {
+          // Do not match directories name
+          nodir: true,
+        }),
+        // https://purgecss.com/safelisting.html#safelisting
+        safelist: {
+          // All class that start with "do_not_remove" will not be removed
+          standard: [/^do_not_remove/],
+        },
+      })
+    );
+  }
+
+  return {
+    output: {
+      clean: true,
+    },
+    devtool: isDevServer ? "eval" : "source-map",
+    devServer: {
+      hot: true,
+    },
+    mode: isProd ? "production" : "development",
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: isDevServer
+                ? "style-loader"
+                : MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    plugins,
+  };
+};

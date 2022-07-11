@@ -1,35 +1,34 @@
 # Learn Webpack
 
-- [mode](mode) Explain Webpack 4 new `mode` option
-- [env-argv-parameters](env-argv-parameters) Export configuration as function and access `env` and `argv` parameters which can be used to create different configurations based on environment
-- [tree-shaking](tree-shaking) Prevent code duplication, remove unused code
-- [babel](babel) Transform ES2015 with Babel
-- [babel-polyfill](babel-polyfill) Apply polyfills with Babel
-- [html-template](html-template) Create a custom `HtmlWebpackPlugin` template
-- [load-css](load-css) Use `css-loader` and `style-loader` to parse css files and place them into html page
-- [load-images](load-images) Use `file-loader` and `url-loader` to import images and `raw-loader` to import svg
-- [caching](caching) Add hash to filenames for browser caching
-- [separate-runtime](separate-runtime) Extract webpack runtime in a separate file
-- [source-maps-inline](source-maps-inline) Inline css and js source maps
-- [source-maps-external](source-maps-external) Extract css and js source maps files in a separate file
-- [separate-css-1](separate-css-1) Extract css into a separate file using `MiniCssExtractPlugin`
-- [separate-css-2](separate-css-2) Use of MiniCssExtractPlugin `options.publicPath` to correctly resolve url paths in css
-- [load-sass](load-sass) Use `sass-loader` to parse scss files
-- [postcss](postcss) How to use `postcss-loader`
-- [sass-postcss](sass-postcss) Use `sass-loader` and `postcss-loader` together
-- [remove-unused-css](remove-unused-css) Remove unused css with `PurifyCSSPlugin`
-- [minify](minify) Minify css, javascript, html
-- [chunks-types](chunks-types) Describe what a chunk is and the different types of chunks
-- [dynamic-import](dynamic-import) Code splitting, use `import()` to load chunks on demand
-- [lazy-load-image](lazy-load-image) Dynamic import an image with `import()`
-- [require-context](require-context) Require all files in a directory or matching a pattern
-- [lazy-load-multiple-images](lazy-load-multiple-images) Use `require.context` and `import()` to automatically lazy-load multiple images
-- [lazy-load-images-folders](lazy-load-images-folders) Dynamically import folders with images depending on the button you click
-- [publicpath](publicpath) What is `output.publicPath` and how to use it
-- [bundle-splitting-1](bundle-splitting-1) The basic of bundle splitting with `SplitChunksPlugin` default options
-- [bundle-splitting-2](bundle-splitting-2) Another bundle splitting example
-- [bundle-splitting-3](bundle-splitting-3) `splitChunks.chunks: 'all'`
-- [bundle-splitting-4](bundle-splitting-4) extract css with splitChunksPlugin
-- [bundle-splitting-5](bundle-splitting-5) `cacheGroups` configuration
-- [composing-configs](composing-configs) Create different configurations, separate production and development targets, merge configurations
-- [static-site-generator](static-site-generator) A basic static site generator with router capabilities using only `HtmlWebpackPlugin`
+A collection of simple [Webpack](https://webpack.js.org/) examples:
+
+- [Mode](./mode/README.md): Enable webpack built-in optimizations for development and production.
+- [Multiple Configurations](./multiple-configurations/README.md): Use `--env` flag to create different config based on the environment.
+- [Bundle](./bundle/README.md): Merge multiple javascripts files.
+- [Separate Runtime](./separate-runtime/README.md): Extract webpack runtime logic in a separate file.
+- [Tree Shaking](./tree-shaking/README.md): Remove unused javascript codes from the app.
+- [Chunks Types](./chunks-types/README.md): Explain what a webpack chunk is.
+- [Dynamic Import](./dynamic-import/README.md): Use `import()` to load part of an app on demand.
+- [Code Splitting](./code-splitting/README.md): Divide an app into smaller files.
+- [Loaders and Plugins](./loaders-plugins/README.md): Explain what webpack loaders and plugins are.
+- [Asset Modules](./asset-modules/README.md): Import additional type of assets without configuring loaders.
+- [Babel](./babel/README.md): Use `babel-loader` to transpile ES2015 code into into a backwards compatible version of javascript.
+- [Babel Polyfill](./babel-polyfill/README.md): Apply pollyfills to provide a backwards compatible version of a javascript feature.
+- [Html Plugin Template](./html-plugin-template/README.md): Generate html files with `html-webpack-plugin`.
+- [Load CSS](./load-css/README.md): Use `css-loader` and `style-loader` to parse stylesheets and place them into html page.
+- [Source Maps](./source-maps/README.md): Emit javascript and css source maps.
+- [Public Path](./publicpath/README.md): Specify a base path for all the assets within your applicaion.
+- [Separate CSS](./separate-css/README.md): Use `mini-css-extract-plugin` to extract stylesheets into a separate file.
+- [Remove Unused CSS](./remove-unused-css/README.md): Use `purgecss` to remove unused part of stylesheets.
+- [Load Images](./load-images/README.md): Use `asset/resource` to parse and emit images and `asset/source` to parse raw svg files.
+- [SASS](./sass/README.md): Load sass files with `sass-loader`.
+- [PostCSS](./postcss/README.md): Enable postcss with `postcss-loader`.
+- [Minify](./minify/README.md): Enable code minification by using `mode.production`, `css-minimizer-webpack-plugin` and `HtmlWebpackPlugin.minify`.
+- [Caching](./caching/README.md): Setup client level caching by adding hash to filenames.
+- [Context Module](./context-module/README.md): Run `require.context()` at compile time to import assets.
+- [Debug Webpack](./debug-webpack/README.md): Debug webpack configuration using nodejs `--inspect` tool.
+- [Lazy Load Image](./lazy-load-image/README.md): Dynamically import an image with `import()`.
+- [Lazy Load Multiple Images](./lazy-load-multiple-images/README.md): Use `require.context()` to include all images from a folder and dynamically load them with `import()`.
+- [Lazy Load Multiple Images Folders](./lazy-load-multiple-images-folders/README.md): Dynamically import images inside multiple folders when a button is clicked.
+- [Composing Configurations](./composing-configs/README.md): Organize webpack configs in separate files and merge them with `webpack-merge`.
+- [Static Site Generator](./static-site-generator/README.md): Create a simple SSG on top of `HtmlWebpackPlugin`.

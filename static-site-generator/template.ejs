@@ -1,0 +1,45 @@
+<%
+const {
+  generateAttributes,
+  generateHeadTags,
+  generateBodyTags,
+  generateWebpackCSSReferences,
+  generateWebpackJSReferences
+} = require('./template-utils');
+
+const {
+  options: {
+    title = '',
+    head = {},
+    body = {},
+    appId = '',
+    pageName,
+    attributes: {
+      html: htmlAttrs = {},
+      head: headAttrs = {},
+      css: cssAttrs = {},
+      body: bodyAttrs = {},
+      js: jsAttrs = {}
+    } = {}
+  },
+  files
+} = htmlWebpackPlugin;
+%>
+
+<!doctype html>
+<html <%= generateAttributes(htmlAttrs) %> >
+  <head <%= generateAttributes(headAttrs) %> >
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= generateHeadTags(head) %>
+    <%= generateWebpackCSSReferences(files, webpackConfig, cssAttrs) %>
+  </head>
+  <body <%= generateAttributes(bodyAttrs) %> >
+    <%= generateBodyTags(body) %>
+    <div id="<%= appId %>">
+      <%= require(`./src/pages/${htmlWebpackPlugin.options.pageName}.js`) %>
+    </div>
+    <%= generateWebpackJSReferences(files, webpackConfig, jsAttrs) %>
+  </body>
+</html>

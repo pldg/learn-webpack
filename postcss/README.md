@@ -1,17 +1,24 @@
-# Use postcss-loader
+# Use postcss
 
-In this example [postcss](https://github.com/postcss/postcss) plugins are required in `webpack.config.js`, you can also [separate postcss config](https://github.com/postcss/postcss-loader#configuration)
+[Postcss](https://github.com/postcss/postcss) is a tool for transforming styles with javascript plugins. These [plugins](https://github.com/postcss/postcss/blob/main/docs/plugins.md) can lint your css, support variables and mixins, transpile future css syntax, inline images, and more.
 
-[Autoprefixer](https://github.com/postcss/autoprefixer) will add prefixes for css properties. It use [browserslist](https://github.com/ai/browserslist) to specify the browsers you want to target, in this example it's set in `package.json`
+## Configuration
 
-[postcss-custom-properties](https://github.com/postcss/postcss-custom-properties) with its option `preserve: false` will transform all css variables to their original value
+- Install [postcss-loader](https://github.com/webpack-contrib/postcss-loader).
+- Install [postcss-import](https://github.com/postcss/postcss-import) to handle import statements for stylesheets.
+- Install [postcss-preset-env](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env) which bundle a list of plugins.
+- Set [browserslist](https://github.com/browserslist/browserslist).
+
+## Explain this example
+
+Because browserlist is set to `ie 10`, custom properties are transpiled to their original value and prefixes are added for flexbox.
 
 ## Notes
 
-Postcss plugins order is important
+Postcss plugins order is important, they are evaluated from left to right.
 
-If you use postcss-custom-properties I recommend to use [postcss-import](https://github.com/postcss/postcss-import), and set css-loader `import: false` to let postcss-import handle `@import`'s statements. See [postcss-custom-properties issue#138](https://github.com/postcss/postcss-custom-properties/issues/138) for more information
+If you target older browser (like IE) set [`preserve`](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env#preserve) to `false`.
 
-## Further reading
+When `preserve: false` it only transpile css custom properties that are defined within their file. Therefor if you import them from a different file `@import "./partials/var.css";` you must parse the import statement with *postcss-import*. If you want to run a test try to to comment out `postcssImport()` and run the build, only `--color-1` will be transpiled.
 
-See [sass-postcss](../sass-postcss) repository
+If you are using [sass](../SASS/README.md) you don't need postcss-import (import statements are handled by sass).

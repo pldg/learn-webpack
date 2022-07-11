@@ -1,20 +1,21 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.jpg$/,
-        use: {
-          loader: 'file-loader',
-          options: { name: '[name].[hash:4].[ext]' }
-        }
-      }
-    ]
-  },
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({ title: 'lazy-load-image' })
-  ]
+module.exports = (env) => {
+  const isProd = env.target === "prod";
+
+  return {
+    output: {
+      clean: true,
+    },
+    mode: isProd ? "production" : "development",
+    module: {
+      rules: [
+        {
+          test: /\.jpg$/,
+          type: "asset/resource",
+        },
+      ],
+    },
+    plugins: [new HtmlWebpackPlugin()],
+  };
 };

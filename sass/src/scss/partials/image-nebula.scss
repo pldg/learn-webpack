@@ -1,0 +1,5 @@
+.image-nebula {
+  @include bg-image("../images/nebula.jpg");
+  height: 20vh;
+  max-width: 20vw;
+}

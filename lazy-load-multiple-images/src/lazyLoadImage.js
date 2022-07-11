@@ -3,6 +3,6 @@ export default (imageName, img) => {
     /* webpackMode: "lazy-once" */
     `./images/${imageName}`
   )
-  .then(src => img.src = src.default)
-  .catch(err => console.error(err));
-}
+    .then((src) => (img.src = src.default))
+    .catch((err) => console.error(err));
+};

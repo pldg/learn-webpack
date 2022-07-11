@@ -1,0 +1,1 @@
+{"version":3,"file":"main.css","mappings":"AAAA,KACE,wBACF","sources":["webpack:///./src/style.css"],"sourcesContent":["body {\r\n  background-color: lightblue;\r\n}\r\n\r\n/* This comment will be removed by CssMinimizerWebpackPlugin */\r\n"],"names":[],"sourceRoot":""}

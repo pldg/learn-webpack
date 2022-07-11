@@ -1,47 +1,61 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const postcssPresetEnv = require("postcss-preset-env");
+const postcssImport = require("postcss-import");
 
-module.exports = (env) => ({
-  devtool: env.target == 'devServer' ? 'eval' : 'source-map',
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: env.target == 'devServer' ? 'style-loader' : MiniCssExtractPlugin.loader
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              import: false // let postcss-import handle @import
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-              plugins: () => ([
-                require('postcss-import'), // to correct postcss-custom properties bug
-                require('postcss-custom-properties')({
-                  preserve: false
-                }),
-                require('autoprefixer')
-              ])
-            }
-          }
-        ]
-      }
-    ]
-  },
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-    new MiniCssExtractPlugin(),
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      title: 'postcss'
-    })
-  ]
-});
+module.exports = (env) => {
+  const isProd = env.target === "prod";
+  const isDevServer = env.target === "serve";
+
+  return {
+    output: {
+      clean: true,
+    },
+    devtool: isDevServer ? "eval" : "source-map",
+    devServer: {
+      hot: true,
+    },
+    mode: isProd ? "production" : "development",
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: isDevServer
+                ? "style-loader"
+                : MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true,
+              },
+            },
+            {
+              loader: "postcss-loader",
+              options: {
+                sourceMap: true,
+                postcssOptions: {
+                  // Postcss plugins are evaluated from left to right
+                  plugins: [
+                    // Postcss-import should always be the first plugin to load
+                    postcssImport(),
+                    postcssPresetEnv({
+                      preserve: false,
+                    }),
+                  ],
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: "./src/index.html",
+      }),
+    ].concat(isDevServer ? [] : new MiniCssExtractPlugin()),
+  };
+};

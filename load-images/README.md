@@ -1,27 +1,51 @@
 # Load images
 
-You can set [url-loader](https://github.com/webpack-contrib/url-loader) to parse any file, in this case `.jpg`. It will return a DataURL if the file is smaller than a byte limit. If the file is larger [file-loader](https://github.com/webpack-contrib/file-loader) is used instead. You can pass all *file-loader* options inside *url-loader*
+## Configure webpack
 
-There are different ways to import an image
+To import an image file use [`asset/resource`](https://webpack.js.org/guides/asset-modules/#resource-assets) loader which emit a file into output directory.
 
-- use `require` in html
-- use `background-image` in css
-- use `import` in javascript
+To import an svg file use [`asset/source`](https://webpack.js.org/guides/asset-modules/#source-assets) loader which parse the file as string returing the raw content of the svg.
 
-To import images in **html** you have to use [lodash](https://lodash.com/docs/4.17.10#template) syntax `<%= require('path/to/image') %>` to let Webpack parse the files
+## Import an image in HTML
 
-You can also use [html-loader](https://github.com/webpack-contrib/html-loader) which parse `src` attribute without the need of using lodash syntax. Using html-loader will disable lodash, for example you will not be able to import title like this `<%= htmlWebpackPlugin.options.title %>`
+Import the image in html using [lodash](https://lodash.com/docs/4.17.10#template) syntax:
 
-Import images in **javascript** `import image from 'path/to/image';`
+```html
+<img src="<%= require('./alice.jpg') %>">
+```
 
-Import images in **css** `background-image: url('path/to/image');`
+When you run the build:
 
-To import `.svg` files in html you can use [raw-loader](https://github.com/webpack-contrib/raw-loader) which give you access to the raw SVG content
+- Image is copied in the output *dist* folder `73728f89fad1b84b9a3d.jpg`.
+- Inside *dist/index.html* img `src` attribute become `src="73728f89fad1b84b9a3d.jpg"`.
+- The image name is an hash for [caching](../caching/README.md) purpose.
 
-## Notes
+## Import an image in CSS
 
-[placeholders](https://survivejs.com/webpack/optimizing/adding-hashes-to-filenames/index.html#placeholders) `[name]` is the name of the file, `[ext]` is its extension. See [caching](../caching) repository for more information on placeholders
+```css
+.image-nebula {
+  background-image: url("./nebula.jpg");
+  /* -> 0f7001a62be1d14e6b63.jpg */
+}
+```
+
+## Import an image in JavaScript
+
+```js
+import inferno from "./inferno.jpg";
+// -> 0c9627955a614a979a10.jpg
+```
+
+## Note
+
+By default, `asset/resource` modules are emitting with `[hash][ext][query]` filename into output directory. Read [caching](../caching/README.md) for more information.
+
+You can also use [html-loader](https://github.com/webpack-contrib/html-loader) which parse html files and [convert loadable attributes to import statements](https://github.com/webpack-contrib/html-loader#sources), so you don't need to lodash syntax. Using html-loader will disable lodash, you will not be able to import title like this `<%= htmlWebpackPlugin.options.title %>`.
 
 ## Further reading
 
-More on [loading images](https://survivejs.com/webpack/loading/images/)
+[SurviveJS - Loading Images](https://survivejs.com/webpack/loading/images/)
+
+## BUGS
+
+When in devserver `npm run serve` if you modify *index.js* the page will reload and *alice.jpg* disapear with 404 error.

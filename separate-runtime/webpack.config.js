@@ -1,10 +1,8 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-
 module.exports = {
-  optimization: {
-    runtimeChunk: "single"
+  output: {
+    clean: true,
   },
-  plugins: [
-    new CleanWebpackPlugin(['dist'])
-  ]
+  optimization: {
+    runtimeChunk: "single",
+  },
 };

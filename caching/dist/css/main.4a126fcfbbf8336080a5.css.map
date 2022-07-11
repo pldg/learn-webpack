@@ -1,0 +1,1 @@
+{"version":3,"file":"css/main.4a126fcfbbf8336080a5.css","mappings":";;;AAAA;EACE,2BAA2B;AAC7B;;AAEA;EACE,cAAc;EACd,eAAe;AACjB,C","sources":["webpack:///./src/style.css"],"sourcesContent":["body {\r\n  background-color: lightblue;\r\n}\r\n\r\nimg {\r\n  display: block;\r\n  max-width: 20vw;\r\n}"],"names":[],"sourceRoot":""}

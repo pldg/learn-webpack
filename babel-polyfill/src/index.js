@@ -1,3 +1,8 @@
-import '@babel/polyfill';
+// Import core-js only once in your app
+// Use this only with `useBuiltIns: "entry"`
+//import "core-js/stable";
 
-const p = new Promise( resolve => resolve() );
+import("./foo");
+import("./bar");
+
+console.log("index.js loaded!");

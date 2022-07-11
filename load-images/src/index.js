@@ -1,9 +1,6 @@
-import './style.css';
-import kitten from './kitten.jpg';
-import h1 from './h1';
-import img from './img';
+import "./style.css";
+import inferno from "./inferno.jpg";
 
-console.log('index.js loaded!');
+document.querySelector(".image-inferno").src = inferno;
 
-document.body.prepend( h1() );
-document.body.appendChild( img(kitten) );
+console.log("index.js loaded!");

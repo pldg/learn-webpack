@@ -1,23 +1,24 @@
-const merge = require('webpack-merge');
-const parts = require('./webpack.parts');
-const {
-  PATHS
-} = require('./const');
+const { merge } = require("webpack-merge");
+const { PATHS } = require("./const");
+const parts = require("./webpack.parts");
 
 const prodConfig = merge([
-  parts.clean(),
   parts.output({
-    filename: '[name].[chunkhash:4].js'
+    clean: true,
+    filename: "js/[name].[contenthash].js",
+    assetModuleFilename: "assets/[name].[hash][ext][query]",
   }),
-  parts.mode('production'),
+  parts.mode("production"),
   parts.html({
-    options: {
-      template: PATHS.input + '/index.html'
-    }
+    template: PATHS.input + "/index.html",
+    minify: {
+      collapseWhitespace: true,
+      removeComments: true,
+    },
   }),
   parts.extractCSS({
-    outputDir: 'css/'
-  })
+    outputDir: "css/",
+  }),
 ]);
 
 module.exports = prodConfig;

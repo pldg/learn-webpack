@@ -1,39 +1,56 @@
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = {
-  output: {
-    filename: '[name].[chunkhash:4].js'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.jpg$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[hash:4].[ext]'
-          }
-        }
-      },
-      {
-        test: /\.css$/,
-        use: [
-          { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader' }
-        ]
-      }
-    ]
-  },
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:4].css'
-    }),
-    new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      title: 'learn-webpack-caching'
-    })
-  ]
+module.exports = (env) => {
+  const isProd = env.target === "prod";
+  const isDevServer = env.target === "serve";
+
+  return {
+    output: {
+      clean: true,
+      filename: "js/[name].[contenthash].js",
+      assetModuleFilename: "assets/[name].[hash][ext][query]",
+    },
+    devtool: isDevServer ? "eval" : "source-map",
+    devServer: {
+      hot: true,
+    },
+    mode: isProd ? "production" : "development",
+    module: {
+      rules: [
+        {
+          test: /\.jpg$/,
+          type: "asset/resource",
+        },
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: isDevServer
+                ? "style-loader"
+                : MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: "./src/index.html",
+      }),
+    ].concat(
+      isDevServer
+        ? []
+        : new MiniCssExtractPlugin({
+            filename: "css/[name].[contenthash].css",
+            chunkFilename: "css/[id].[contenthash].css",
+          })
+    ),
+  };
 };

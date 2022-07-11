@@ -1,53 +1,63 @@
 # Dynamic import
 
-[Code splitting](https://webpack.js.org/glossary/#c) refers to dividing your code into more smaller parts / [chunks](../chunks-types) which you can load on demand with [dynamic import](https://webpack.js.org/guides/code-splitting/#dynamic-imports) function. This is particular useful to improve the performance of your website or application (bandwidth, loading time and caching)
+If you want to improve the performance of your app you can use a technique called [code splitting](https://webpack.js.org/glossary/#c) to divide your assets into smaller one which you can load on demand using [dynamic import](https://webpack.js.org/guides/code-splitting/#dynamic-imports) (also called [lazy loading](https://webpack.js.org/guides/lazy-loading/)).
 
-## How dynamic loading works
+## How dynamic import works
 
-Dynamic import (also called [lazy loading](https://webpack.js.org/guides/lazy-loading/)) use [import()](https://webpack.js.org/api/module-methods/#import-) syntax, a function that takes a path to a module as argument and return a [promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) which can then be resolved. In other words, it let you load a part of your app only when needed
-
-```js
-import('./foo').then(foo => console.log(foo.default));
-```
-
-Every time we use dynamic import, webpack produce a new chunk for that module (this happen also when you use it to import images or other files)
-
-Note: because we're using webpack 4 we need `default` to log out the default export of the module, more information [here](https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655)
-
-## Dynamic load with expression
-
-It's also possible to load a module dynamically. `import()` can resolve only certain kinds of dynamic expressions because the path must be statically analyzable. For example `import(myVar)` will fail because webpack requires at least some file location information
+To lazy load a module you use the [import()](https://webpack.js.org/api/module-methods/#import-1) function, a webpack specific feature that takes a path to a module as argument and return a [Promise](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
 
 ```js
-import(`./modules/${someModule}`);
+import('./some-module').then(module => console.log(module.default));
 ```
 
-In this example I added two modules: *module1.js* and *module2.js*. Only the former one is loaded dynamically, but as you can see in the output folder both modules are begin exported. Inspect *0.js* and *1.js*. This happen because we use a dynamic expression to load the module. Using `webpackInclude` and `webpackExclude` options allows us to add regex patterns that reduce the files that webpack will bundle for this import
+Every time you use dynamic import webpack produce a new chunk for that module.
 
-Read the highlight statements in webpack [documentation](https://webpack.js.org/api/module-methods/#import-) for more information
+You can also [lazy load images](../lazy-load-image) and other type of assets.
 
-## Dynamic chunks naming
+## Using a variable inside dynamic import
 
-By default lazy loaded chunks (also called async chunks or normal chunks) are named with an id starting from 0: `0.js`, `1.js`, and so on
+To use [dynamic expressions](https://webpack.js.org/api/module-methods/#dynamic-expressions-in-import) inside `import()` webpack requires at least some file location information because the path must be statically analyzable:
 
-You can change their name using [chunkFilename](https://webpack.js.org/configuration/output/#output-chunkfilename), for example: `output.chunkFilename: 'lazy-chunk.[id].js'` where `[id]` returns the chunk id
+```js
+// `./modules/` is necessary for webpack to statically analyze the path
+import(`./modules/${myModule}`);
+```
 
-To set a specific name for each lazy loaded module use a [special parameter](https://webpack.js.org/api/module-methods/#import-) inside the import statement like so: `/* webpackChunkName: "module_name" */` in this case `[id]` will be replaced with `module_name`. This commented parameters in webpack are commonly called "magic comments"
+In this case it'll produce a new chunk for each module inside *./modules/*.
+
+## Configure dynamic import
+
+You can use [magic comments](https://webpack.js.org/api/module-methods/#magic-comments) to futher optimize the dynamic import funcion.
+
+## Explain this example
+
+In this example there are two modules, *module-1.js* and *module-2.js*. Only the former one is loaded dynamically but as you can see in the output folder both modules are begin exported, *src_module-1_js.js* and *src_module-2_js.js*. This happen because we use a dynamic expression to load the module.
+
+```txt
+asset main.js 13.3 KiB [emitted] (name: main)
+asset src_modules_module-1_js.js 646 bytes [compared for emit]
+asset src_modules_module-2_js.js 646 bytes [compared for emit]
+asset index.html 341 bytes [compared for emit]
+runtime modules 6.51 KiB 9 modules
+built modules 896 bytes [built]
+  modules by path ./src/modules/ 240 bytes
+    ./src/modules/ lazy ^\.\/.*$ namespace object 160 bytes [built] [code generated]
+    ./src/modules/module-1.js 40 bytes [optional] [built] [code generated]
+    ./src/modules/module-2.js 40 bytes [optional] [built] [code generated]
+  modules by path ./src/*.js 656 bytes
+    ./src/index.js 120 bytes [built] [code generated]
+    ./src/lazy-load-module.js 536 bytes [built] [code generated]
+webpack 5.45.1 compiled successfully in 233 ms
+```
+
+Open *index.html* and click the button, then check devtools console and network tabs.
 
 ## Notes
 
-Babel doesn't support dynamic import syntax out of the box, it needs [syntax-dynamic-import](https://babeljs.io/docs/plugins/syntax-dynamic-import/) plugin
-
-`import()` with relative path doesn't work via `file://` protocol if called from a file that reside in a different directory. Go to [publicpath](../publicpath) repository for an example
+If you use babel for transpiling it needs [@babel/plugin-syntax-dynamic-import](https://babeljs.io/docs/plugins/syntax-dynamic-import/) plugin to support `import()` function.
 
 ## Further reading
 
-See also my [lazy-load-image](../lazy-load-image) repository
-
-[dynamic-imports](https://webpack.js.org/guides/code-splitting/#dynamic-imports)
-
-[lazy-loading](https://webpack.js.org/guides/lazy-loading/)
-
-[webpack-and-dynamic-imports-doing-it-right](https://medium.com/front-end-hacking/webpack-and-dynamic-impor-doing-it-right-72549ff49234)
-
-[code-splitting](https://survivejs.com/webpack/building/code-splitting/)
+- [SurviveJS - Code Splitting](https://survivejs.com/webpack/building/code-splitting/)
+- [Webpack 4 Import and CommonJS](https://medium.com/webpack/webpack-4-import-and-commonjs-d619d626b655)
+- [Webpack and Dynamic Imports doing it right](https://medium.com/front-end-hacking/webpack-and-dynamic-impor-doing-it-right-72549ff49234)

@@ -2,22 +2,36 @@
 
 ## Minify javascript
 
-If we run `webpack --mode="production"` the code will be minimized by default using [uglifyjs-webpack-plugin](https://github.com/webpack-contrib/uglifyjs-webpack-plugin)
+Webpack v5 comes with the latest [terser-webpack-plugin](https://webpack.js.org/plugins/terser-webpack-plugin/) out of the box (no need to install it).
 
-To output source map we set `devtool: 'source-map'`. Webpack will output source maps only with default settings, if you use `optimization.minimizer` to set UglifyWebpackPlugin you must enable its `sourceMap: true` plugin option
+Running webpack in production mode will enable minification by default.
 
-`uglifyOptions.compress.drop_console: true` will remove `console.log` from your code, but setting `sourceMap: true` will disable `compress.drop_console` option
-
-Disable minify with `optimization.minimize: false` or tweak the settings even more with [minimizer](https://webpack.js.org/configuration/optimization/#optimization-minimizer) option
+To remove `console.log()` statements add [`drop_console`](https://github.com/terser/terser#compress-options) to [`terserOptions`](https://webpack.js.org/plugins/terser-webpack-plugin/#terseroptions).
 
 ## Minify css
 
-Use [OptimizeCSSAssetsPlugin](https://github.com/NMFR/optimize-css-assets-webpack-plugin) to minify and remove duplicates css. This plugin rely on [cssnano](https://github.com/ben-eb/cssnano) to process css
+Use [css-minimizer-webpack-plugin](https://webpack.js.org/plugins/css-minimizer-webpack-plugin/) to minify and remove duplicates css.
 
-Setting `optimization.minimizer` overrides the defaults provided by webpack, so make sure to also specify a JS minimizer (for example *UglifyWebpackPlugin*)
+```js
+optimization: {
+  minimizer: [
+    // Tells webpack@5 to extend defaults minimizer options
+    `...`,
+    new CssMinimizerPlugin()
+  ]
+}
+```
 
-To output external css source maps you must set `cssProcessorOptions`, see optimize-css-assets-webpack-plugin [issue #53](https://github.com/NMFR/optimize-css-assets-webpack-plugin/issues/53)
+This config will enable css optimization only in production mode.
 
 ## Minify html
 
-Use `HtmlWebpackPlugin.minify` to minimize html, full list of [minify options](https://github.com/kangax/html-minifier#options-quick-reference)
+Use [`HtmlWebpackPlugin.minify`](https://github.com/jantimon/html-webpack-plugin#minification) to minimize html.
+
+## Note
+
+To enable minification in development set [`optimization.minimize: true`](https://webpack.js.org/configuration/optimization/#optimizationminimize).
+
+You can override the default minimizer with [`optimization.minimizer`](https://webpack.js.org/configuration/optimization/#optimizationminimizer) option.
+
+Source maps like [`eval` don't work](https://webpack.js.org/plugins/terser-webpack-plugin/#note-about-source-maps) with minimizer enable.

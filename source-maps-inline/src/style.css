@@ -1,5 +1,0 @@
-@import './var.css';
-
-body {
-  background-color: var(--bg-color);
-}

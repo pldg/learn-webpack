@@ -1,9 +1,22 @@
-# Use default optimizations with `mode`
+# The `mode` option
 
-[mode](https://webpack.js.org/concepts/mode/) tells webpack to use its [built-in optimizations](https://medium.com/webpack/webpack-4-mode-and-optimization-5423a6bc597a)
+From Webpack 4 you can set [`mode`](https://webpack.js.org/configuration/mode/) to tell webpack to use [built in optimizations](https://medium.com/webpack/webpack-4-mode-and-optimization-5423a6bc597a).
 
-In this example `--mode` is set in CLI but you can also set it in Webpack config with the `mode` option
+Setting `mode` will expose `process.env.NODE_ENV` environment variable which can be used to create [different webpack configurations](../multiple-configurations/README.md) or in your app at compile time using [DefinePlugin](https://webpack.js.org/plugins/define-plugin/).
 
-If `entry` point is omitted, your app files must go in `src` folder. When you run Webpack a `dist` folder with all the output assets will be created
+## Explain this example
 
-To make the output cleaner to examine, pass `--devtool=false` parameter to webpack. Webpack generate eval based source maps by default and doing this will disable the behavior
+Run *package.json* scripts:
+
+```json
+"scripts": {
+  "dev": "webpack --mode development",
+  "prod": "webpack --mode production"
+}
+```
+
+And inspect results *dist/main.js* bundle.
+
+## Notes
+
+If [entry point](https://webpack.js.org/concepts/entry-points/) is omitted your app files must go in *src* folder, when you run webpack a *dist* folder with all the output assets will be created.

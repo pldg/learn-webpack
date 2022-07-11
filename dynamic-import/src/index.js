@@ -1,5 +1,5 @@
-import loadModule from './loadModule';
+import lazyLoadModule from "./lazy-load-module";
 
-const loadModule_button = loadModule('module1.js');
+lazyLoadModule("module-1.js");
 
-document.body.prepend(loadModule_button);
+console.log("index.js loaded!");

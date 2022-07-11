@@ -1,7 +1,0 @@
-@mixin bg-image($url) {
-  background-image: url($url);
-  background-size: cover;
-  background-position: center;
-  height: 20vh;
-  max-width: 20vw;
-}
